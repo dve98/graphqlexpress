@@ -1,4 +1,13 @@
+require('dotenv').config()
+const { Client } = require('pg')
 const { ApolloServer, gql } = require("apollo-server");
+
+
+const client = new Client({
+    connectionString : process.env.PGSTRING,
+    ssl: { rejectUnauthorized: false }
+  })
+client.connect();  
 
 
 const typeDefs = gql`
@@ -53,8 +62,28 @@ let books = [
 
     },  
     Query: {
-      Getbooks: () => books,
-      Getbook: (_,arg) => books.find(number => number.id==arg.id)
+      Getbooks: async () => { 
+                               try{
+                                let resp = await client.query('select * from books')
+                                return resp.rows
+
+                                }catch(e){
+                                    console.log(e)
+                                }
+                               
+                             },
+
+      Getbook: async (_,arg) => { 
+                                  try{
+                                    let resp = await client.query(`select * from books where id = '${arg.id}'`)
+                                    return resp.rows
+                  
+
+                                  }catch(e){
+                                   console.log(e)
+                                  }  
+                                 
+                                }
     },
   };
 
