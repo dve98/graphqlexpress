@@ -1,17 +1,22 @@
 {
+  "type": "module",
   "name": "cursographql",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "Fredy B",
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^3.6.1",
+    "dotenv": "^10.0.0",
     "graphql": "^16.2.0",
     "knex": "^0.95.15",
+    "node-fetch": "^3.3.0",
+    "nodemon": "^2.0.15",
     "pg": "^8.7.1"
   }
 }
